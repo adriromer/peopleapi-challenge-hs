@@ -1,1 +1,2 @@
-# peopleapi-challenge-hs
+# peopleApiChallenge
+Simple People api for HungerStation

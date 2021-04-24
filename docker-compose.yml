@@ -1,0 +1,52 @@
+version: '3'
+
+services:
+  mariadb:
+    image: 'mariadb:latest'
+    container_name: mariadb
+    volumes:
+      - /volumen/mariadb-volumen:/var/lib/mysql
+      - ./sql:/docker-entrypoint-initdb.d/
+    restart: 'always'
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_USER: dbuser
+      MYSQL_PASSWORD: dbpass
+      MYSQL_DATABASE: people
+      #    ports:
+      #      - 3306:3306
+
+  traefik:
+    image: library/traefik:alpine
+    container_name: traefik
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: >
+      --logLevel=ERROR
+      --api.dashboard
+      --docker
+      --entrypoints="Name:http Address::80"
+      --defaultentrypoints="http"
+    ports:
+      - 80:80
+      
+  pac:
+    build: .
+    container_name: pac
+    depends_on:
+      - mariadb
+    environment:
+      DB_USER: dbuser
+      DB_PASSWORD: dbpass
+      DB_HOSTNAME: mariadb
+      DB_PORT: 3306
+      DATABASE: people
+      LISTEN_HOST: 0.0.0.0
+      LISTEN_PORT: 8080
+    labels:
+      traefik.enable: true
+      traefik.port: 8080
+      traefik.protocol: http
+      traefik.frontend.rule: Host:localhost
+      traefik.frontend.passHostHeader: true
+      # traefik.backend.loadbalancer.stickiness: true
