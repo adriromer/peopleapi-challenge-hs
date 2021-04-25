@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  description: This is the swagger file that goes with our server code
+  description: This is the swagger file that goes with the people application
   version: "1.0.0"
   title: Swagger Rest Article
 consumes:
@@ -8,10 +8,28 @@ consumes:
 produces:
   - application/json
 
-basePath: /api
+basePath: /
 
-# Paths supported by the server application
+# Paths supported by the people application
 paths:
+  /healthz:
+    get:
+      operationId: people.healthz
+      tags:
+        - People
+      summary: healthz That does a Select to the DB to check connectivity
+      description: healthz
+      responses:
+        200:
+          description: Successfully perform a select to the peopleDB
+          schema:
+            type: array
+            items:
+              properties:
+                message:
+                  type: string
+                  description: holis
+
   /people:
     get:
       operationId: people.read_all

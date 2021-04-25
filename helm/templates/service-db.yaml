@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "peopleapi-challenge-hs.fullname" . }}-db
+  labels:
+    {{- include "peopleapi-challenge-hs.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.portdb }}
+      targetPort: 3306
+      protocol: TCP
+      name: http
+  selector:
+    app: {{ include "peopleapi-challenge-hs.fullname" . }}-db 

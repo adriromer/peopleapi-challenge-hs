@@ -1,0 +1,85 @@
+# Default values for peopleapi-challenge-hs.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+image:
+  repository: adriromer/peopleapi-challenge-hs
+  pullPolicy: Always
+  #IfNotPresent
+  tag: latest
+
+replicaCount: 1
+
+readinessProbe:
+  path: "/api/people/healthz"
+  port: 8080
+  initialDelaySeconds: 10
+  periodSeconds: 15
+
+
+livenessProbe:
+  path: "/api/people/healthz"
+  port: 8080
+  initialDelaySeconds: 40
+  periodSeconds: 10  
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: peopleapi-challenge-hs
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 8080
+  portdb: 3306
+
+ingress:
+  enabled: true
+  annotations: {}
+  hosts:
+    - host: peopleapi-challenge-hs.local
+      paths:
+      - path: /
+        backend:
+          serviceName: peopleapi-challenge-hs
+          servicePort: 80
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources:
+  requests:
+    cpu: 200m
+    memory: 300Mi
+
+hpa:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 4
+  metrics: 
+    cpu: 
+      averageValue: 50m
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

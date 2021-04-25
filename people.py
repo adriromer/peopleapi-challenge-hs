@@ -1,11 +1,23 @@
 """
-This is the people module and supports all the REST actions for the
+This is the people module that supports all the REST actions for the
 people data
 """
 
+import logging
 from flask import make_response, abort
 from config import db
 from models import Person, PersonSchema
+
+def healthz():
+    """
+    This function responds to a request healthz
+
+    :return:        json message ok
+    """
+    # Create the list of people from our data
+    person = Person.query.filter(Person.person_id == "1").one_or_none()
+    db.session.commit()
+    return '{"message": "ok"}'
 
 
 def read_all():
@@ -21,6 +33,7 @@ def read_all():
     # Serialize the data for the response
     person_schema = PersonSchema(many=True)
     data = person_schema.dump(people)
+    db.session.commit()
     return data
 
 
@@ -41,10 +54,12 @@ def read_one(person_id):
         # Serialize the data for the response
         person_schema = PersonSchema()
         data = person_schema.dump(person)
+        db.session.commit()
         return data
 
     # Otherwise, nope, didn't find that person
     else:
+        db.session.commit()
         abort(
             404,
             "Person not found for Id: {person_id}".format(person_id=person_id),
@@ -81,11 +96,12 @@ def create(person):
 
         # Serialize and return the newly created person in the response
         data = schema.dump(new_person)
-
+        db.session.commit()
         return data, 201
 
     # Otherwise, nope, person exists already
     else:
+        db.session.commit()
         abort(
             409,
             "Person {fname} {lname} exists already".format(
@@ -121,6 +137,7 @@ def update(person_id, person):
 
     # Are we trying to find a person that does not exist?
     if update_person is None:
+        db.session.commit()
         abort(
             404,
             "Person not found for Id: {person_id}".format(person_id=person_id),
@@ -130,6 +147,7 @@ def update(person_id, person):
     elif (
         existing_person is not None and existing_person.person_id != person_id
     ):
+        db.session.commit()
         abort(
             409,
             "Person {fname} {lname} exists already".format(
@@ -153,7 +171,7 @@ def update(person_id, person):
 
         # return updated person in the response
         data = schema.dump(update_person)
-
+        db.session.commit()
         return data, 200
 
 
@@ -171,12 +189,14 @@ def delete(person_id):
     if person is not None:
         db.session.delete(person)
         db.session.commit()
+        db.session.commit()
         return make_response(
             "Person {person_id} deleted".format(person_id=person_id), 200
         )
 
     # Otherwise, nope, didn't find that person
     else:
+        db.session.commit()
         abort(
             404,
             "Person not found for Id: {person_id}".format(person_id=person_id),

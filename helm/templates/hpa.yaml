@@ -1,0 +1,27 @@
+{{ if .Values.hpa.enabled }}
+{{ if and (eq .Capabilities.KubeVersion.Major "1") (ge .Capabilities.KubeVersion.Minor "8") }}
+apiVersion: autoscaling/v2beta1
+{{ else }}
+#apiVersion: autoscaling/v2alpha1
+apiVersion: autoscaling/v2beta2
+{{ end }}
+kind: HorizontalPodAutoscaler
+metadata:
+  name: "{{ .Chart.Name }}-hpa-policy"
+  namespace: 
+spec:
+  scaleTargetRef:
+    #    apiVersion: apps/v1beta1
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ include "peopleapi-challenge-hs.fullname" . }}
+  minReplicas: {{ .Values.hpa.minReplicas }}
+  maxReplicas: {{ .Values.hpa.maxReplicas }}
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageValue: {{ .Values.hpa.metrics.cpu.averageValue }}
+{{ end }}
