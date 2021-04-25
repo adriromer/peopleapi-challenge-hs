@@ -12,16 +12,28 @@ basePath: /
 
 # Paths supported by the people application
 paths:
+<<<<<<< HEAD
   /healthz:
+=======
+  /people/healthz:
+>>>>>>> 8ed0e5c75ea3349e7d6bd9d336a7a34842907deb
     get:
       operationId: people.healthz
       tags:
         - People
+<<<<<<< HEAD
       summary: healthz That does a Select to the DB to check connectivity
       description: healthz
       responses:
         200:
           description: Successfully perform a select to the peopleDB
+=======
+      summary: healthz
+      description: healthz
+      responses:
+        200:
+          description: Successfully read people set operation
+>>>>>>> 8ed0e5c75ea3349e7d6bd9d336a7a34842907deb
           schema:
             type: array
             items:

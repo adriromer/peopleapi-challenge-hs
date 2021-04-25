@@ -16,9 +16,13 @@ def healthz():
     """
     # Create the list of people from our data
     person = Person.query.filter(Person.person_id == "1").one_or_none()
+<<<<<<< HEAD
     db.session.commit()
     return '{"message": "ok"}'
 
+=======
+    return '{"message": "ok"}'
+>>>>>>> 8ed0e5c75ea3349e7d6bd9d336a7a34842907deb
 
 def read_all():
     """
