@@ -7,6 +7,15 @@ from flask import make_response, abort
 from config import db
 from models import Person, PersonSchema
 
+def healthz():
+    """
+    This function responds to a request healthz
+
+    :return:        json message ok
+    """
+    # Create the list of people from our data
+    person = Person.query.filter(Person.person_id == "1").one_or_none()
+    return '{"message": "ok"}'
 
 def read_all():
     """

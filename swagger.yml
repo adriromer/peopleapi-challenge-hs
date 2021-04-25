@@ -12,6 +12,24 @@ basePath: /api
 
 # Paths supported by the server application
 paths:
+  /people/healthz:
+    get:
+      operationId: people.healthz
+      tags:
+        - People
+      summary: healthz
+      description: healthz
+      responses:
+        200:
+          description: Successfully read people set operation
+          schema:
+            type: array
+            items:
+              properties:
+                message:
+                  type: string
+                  description: holis
+
   /people:
     get:
       operationId: people.read_all
