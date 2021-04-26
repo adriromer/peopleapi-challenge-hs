@@ -93,7 +93,7 @@ hpa:
   maxReplicas: 4
   metrics: 
     cpu: 
-      averageValue: 50m
+      averageValue: 100m
 
 mariadb:
   user: dbuser
