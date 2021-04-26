@@ -14,7 +14,7 @@ all endpoints are declared in http;//peopleapi-challenge-hs.local/ui as swagger 
 The database used is a Generic Image of MariaDB, not PVC was defined therefore all information added is destroyed if the pod is restarted. The focused of the project was on the Application Pod.
 
 **Docker compose**
-For docker compose run "docker-compose" from the base dir.
+For docker compose run "docker-compose up" from the base dir.
 
 **Helm Chart**
 To install the helm chart run the folloing bash script: ./peopleapi-challenge-hs.sh
