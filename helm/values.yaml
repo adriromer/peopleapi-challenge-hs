@@ -73,6 +73,15 @@ resources:
     cpu: 200m
     memory: 300Mi
 
+resources_db:
+  limits:
+    cpu: 1000m
+    memory: 2000Mi
+  requests:
+    cpu: 200m
+    memory: 300Mi
+
+
 hpa:
   enabled: true
   minReplicas: 1

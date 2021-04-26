@@ -15,15 +15,12 @@ def healthz():
     :return:        json message ok
     """
     # Create the list of people from our data
-    person_id = 1
-    person = Person.query.filter(Person.person_id == person_id).one_or_none()
-    #person = Person.query.filter(Person.person_id).one_or_none()
-    #person = Person.query.filter(Person.person_id).all()
-    #person_schema = PersonSchema(many=True)
-    #data = person_schema.dump(person)
-    #db.session.commit()
-    #return data
-    return '{"message":"ok"}'
+    person = Person.query.filter(Person.person_id).all()
+    person_schema = PersonSchema(many=True)
+    data = person_schema.dump(person)
+    db.session.commit()
+    return data
+    #return '{"message":"ok"}'
 
 def read_all():
     """

@@ -58,7 +58,7 @@ spec:
             httpGet:
               path: {{ .Values.livenessProbe.path }}
               port: {{ .Values.livenessProbe.port }}
-            initialDelaySeconds: 10
+            initialDelaySeconds: 40
             periodSeconds: 15
             successThreshold: 1
             timeoutSeconds: 3
