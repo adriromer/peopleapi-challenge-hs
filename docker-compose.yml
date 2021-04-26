@@ -19,11 +19,11 @@ services:
     depends_on:
       - mariadb
     environment:
-      DB_USER: dbuser
-      DB_PASSWORD: dbpass
+      MYSQL_USER: dbuser
+      MYSQL_PASSWORD: dbpass
       DB_HOSTNAME: mariadb
       DB_PORT: 3306
-      DATABASE: people
+      MYSQL_DATABASE: people
       LISTEN_HOST: 0.0.0.0
       LISTEN_PORT: 8080
     ports:

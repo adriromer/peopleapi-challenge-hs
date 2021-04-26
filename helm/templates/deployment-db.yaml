@@ -1,32 +1,43 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: peopleapi-challenge-hs-db
+  name: {{ include "peopleapi-challenge-hs.fullname" . }}-db
 spec:
   selector:
     matchLabels:
-      app: peopleapi-challenge-hs-db
+      app: {{ include "peopleapi-challenge-hs.fullname" . }}-db
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: peopleapi-challenge-hs-db
+        app: {{ include "peopleapi-challenge-hs.fullname" . }}-db
     spec:
       containers:
-      - image: adriromer/peopleapi-challenge-hs-db:latest
-        name: peopleapi-challenge-hs-db
+      - image: "{{ .Values.mariadb.repository }}:{{ .Values.mariadb.tag | default .Chart.AppVersion }}"
+        name: {{ include "peopleapi-challenge-hs.fullname" . }}-db
         env:
           # Use secret in real usage
         - name: MYSQL_ROOT_PASSWORD
-          value: secret
+          valueFrom:
+            secretKeyRef:
+              key: MYSQL_ROOT_PASSWORD
+              name: mariadbcredentials
         - name: MYSQL_USER
-          value: dbuser
-        - name: MYSQL_PASSWORD
-          value: dbpass
+          valueFrom:
+            secretKeyRef:
+              key: MYSQL_USER
+              name: mariadbcredentials
         - name: MYSQL_DATABASE
-          value: people
-
+          valueFrom:
+            secretKeyRef:
+              key: MYSQL_DATABASE
+              name: mariadbcredentials
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: MYSQL_PASSWORD
+              name: mariadbcredentials
         ports:
         - containerPort: 3306
           name: mysql

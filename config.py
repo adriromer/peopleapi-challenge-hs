@@ -13,10 +13,9 @@ connex_app = connexion.App(__name__, specification_dir=basedir)
 # Get the underlying Flask app instance
 app = connex_app.app
 
-
 # Configure the SQLAlchemy part of the app instance
 app.config['SQLALCHEMY_ECHO'] = True
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://' + os.getenv('DB_USER')  + ':' + os.getenv('DB_PASSWORD') + '@' + os.getenv('DB_HOSTNAME') + ':' + os.getenv('DB_PORT') + '/' + os.getenv('DATABASE')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://' + os.getenv('MYSQL_USER')  + ':' + os.getenv('MYSQL_PASSWORD') + '@' + os.getenv('DB_HOSTNAME') + ':' + os.getenv('DB_PORT', '3306') + '/' + os.getenv('MYSQL_DATABASE')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_POOL_SIZE'] = os.getenv('DB_POOL', 200)
 app.config['SQLALCHEMY_POOL_RECYCLE'] = os.getenv('DB_POOL_RECYCLE', 280)

@@ -66,6 +66,9 @@ ingress:
   #      - chart-example.local
 
 resources:
+  limits:
+    cpu: 600m
+    memory: 1000Mi
   requests:
     cpu: 200m
     memory: 300Mi
@@ -77,6 +80,17 @@ hpa:
   metrics: 
     cpu: 
       averageValue: 50m
+
+mariadb:
+  user: dbuser
+  password: dbpass
+  password_root: secret
+  database: people
+  repository: adriromer/peopleapi-challenge-hs-db
+  pullPolicy: Always
+  #IfNotPresent
+  tag: latest
+
 
 nodeSelector: {}
 
