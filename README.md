@@ -17,4 +17,4 @@ The database used is a Generic Image of MariaDB, not PVC was defined therefore a
 For docker compose run "docker-compose up" from the base dir.
 
 **Helm Chart**
-To install the helm chart run the folloing bash script: ./peopleapi-challenge-hs.sh
+To install the helm chart run the folloing bash script: ./helm-script-deploy.sh
