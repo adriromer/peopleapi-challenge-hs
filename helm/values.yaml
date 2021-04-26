@@ -107,7 +107,8 @@ mariadb:
 
 pac:
   configmap:
-    db_hostname: peopleapi-challenge-hs-db.default.svc.cluster.local
+    db_hostname: peopleapi-challenge-hs-db
+    #.default.svc.cluster.local
     listen_host: 0.0.0.0
     listen_port: "8080"
     db_pool: "20"
