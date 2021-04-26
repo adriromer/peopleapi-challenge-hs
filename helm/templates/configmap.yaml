@@ -1,14 +1,10 @@
 apiVersion: v1
 data:
-  #DATABASE: people
-  DB_HOSTNAME: peopleapi-challenge-hs-db.default.svc.cluster.local
-  #DB_PASSWORD: dbpass
-  #DB_PORT: "3306"
-  #DB_USER: dbuser
-  LISTEN_HOST: 0.0.0.0
-  LISTEN_PORT: "8080"
-  DB_POOL: "20"
-  DB_POOL_RECYCLE: "280"
+  DB_HOSTNAME: "{{ .Values.pac.configmap.db_hostname }}"
+  LISTEN_HOST: "{{ .Values.pac.configmap.listen_host }}"
+  LISTEN_PORT: "{{ .Values.pac.configmap.listen_port }}"
+  DB_POOL: "{{ .Values.pac.configmap.db_pool }}"
+  DB_POOL_RECYCLE: "{{ .Values.pac.configmap.db_pool_recycle }}"
 kind: ConfigMap
 metadata:
   name: peopleapi-challenge-hs
